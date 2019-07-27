@@ -1,4 +1,4 @@
-const find = require('./index');
+const { find, findAll } = require('./index');
 
 const obj = {
     data: [
@@ -22,20 +22,46 @@ const obj = {
     ]
 };
 
-test('find path to string', () => {
-    const path = find(obj, 'b');
-    expect(path).toEqual(['data', '1', 'attributes', 'children', '1']);
+describe('find', () => {
+    test('find path to string', () => {
+        const path = find(obj, 'b');
+        expect(path).toEqual(['data', '1', 'attributes', 'children', '1']);
+    });
+
+    test('find path to number', () => {
+        const path = find(obj, 20);
+        expect(path).toEqual(['data', '1', 'attributes', 'ttl']);
+    });
+
+    test('finding path in circular object doesn\'t cause RangeError', () => {
+        const embedded = { a: 1 };
+        const obj = { b: embedded };
+        embedded.obj = obj;
+
+        find(obj, 'missing');
+    });
 });
 
-test('find path to number', () => {
-    const path = find(obj, 20);
-    expect(path).toEqual(['data', '1', 'attributes', 'ttl']);
-});
+describe('findAll', () => {
+    test('find all paths to string', () => {
+        const path = findAll(obj, 'b');
+        expect(path).toEqual([['data', '1', 'attributes', 'children', '1']]);
+    });
 
-test('finding path in circular object doesn\'t cause RangeError', () => {
-    const embedded = { a: 1 };
-    const obj = { b: embedded };
-    embedded.obj = obj;
+    test('find all paths to recurring string', () => {
+        const extended = JSON.parse(JSON.stringify(obj));
+        extended.data.push({
+            value: 'b'
+        });
+        const path = findAll(extended, 'b');
+        expect(path).toEqual([['data', '1', 'attributes', 'children', '1'], ['data', '2', 'value']]);
+    });
 
-    find(obj, 'missing');
+    test('finding all paths in circular object doesn\'t cause RangeError', () => {
+        const embedded = { a: 1 };
+        const obj = { b: embedded };
+        embedded.obj = obj;
+
+        findAll(obj, 'missing');
+    });
 });
