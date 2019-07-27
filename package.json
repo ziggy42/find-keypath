@@ -1,7 +1,7 @@
 {
   "name": "find-keypath",
   "version": "1.0.0",
-  "description": "",
+  "description": "Find the key path to a given value in an object.",
   "main": "index.js",
   "scripts": {
     "test": "jest",
@@ -12,5 +12,14 @@
   "devDependencies": {
     "eslint": "^6.1.0",
     "jest": "^24.8.0"
-  }
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ziggy42/find-keypath.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ziggy42/find-keypath/issues"
+  },
+  "homepage": "https://github.com/ziggy42/find-keypath#readme"
 }
