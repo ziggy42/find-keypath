@@ -7,7 +7,7 @@ npm install find-keypath
 ```
 
 ## Usage
-Get the first path to a value in an object
+Get the first path to a value in an object:
 ```js
 const obj = {
     data: [
@@ -24,7 +24,7 @@ const { find } = require('find-keypath');
 const path = find(obj, 'b'); // ['data', '0', 'attributes', 'children', '1']
 ```
 
-Get all paths to a value in an object
+Get all paths to a value in an object:
 ```js
 const obj = {
     data: [
